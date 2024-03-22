@@ -8,7 +8,7 @@ export enum Attribute {
 	'species' = `species`,
 	'type' = `type`,
 	'origin' = `origin`,
-	'NameoffirstEpisode' = 'NameoffirstEpisode',
+	'episode' = 'episode',
 }
 
 class character extends HTMLElement {
@@ -19,7 +19,7 @@ class character extends HTMLElement {
 	species?: string;
 	type?: string;
 	origin?: string;
-	NameoffirstEpisode?: string;
+	episode?: string;
 
 	constructor() {
 		super();
@@ -35,7 +35,7 @@ class character extends HTMLElement {
 			species: null,
 			type: null,
 			origin: null,
-			NameoffirstEpisode: null,
+			episode: null,
 		};
 		return Object.keys(attrs);
 	}
@@ -70,7 +70,7 @@ class character extends HTMLElement {
    <p><b> Species: </b>${this.species}</p>
    <p><b> Type: </b>${this.type}</p>
    <p><b> Origin: </b>${this.origin}</p>
-	 <p><b> First Episode: </b>${this.NameoffirstEpisode}</p>
+	 <p><b> First Episode: </b>${this.episode}</p>
    </section>
    `;
 		}

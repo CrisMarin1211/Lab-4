@@ -1,8 +1,7 @@
 import getRickandMorty from './data/dataFetch';
-import * as MyCharacter from './components/IndexPadre';
+import { character } from './components/IndexPadre';
 import style from './IndexAbuelo.css';
 import Mycharacter, { Attribute } from './components/Character/character';
-import { e, number, string } from '../../../node_modules/mathjs/types/index';
 
 class AppContainer extends HTMLElement {
 	characters: Mycharacter[] = [];
@@ -14,14 +13,11 @@ class AppContainer extends HTMLElement {
 		this.attachShadow({ mode: 'open' });
 	}
 
-
-
 	// DESDE AQUIII
 
 	connectedCallback() {
 		this.render();
 	}
-
 	render() {
 		if (this.shadowRoot) {
 			this.shadowRoot.innerHTML = '';
@@ -30,18 +26,15 @@ class AppContainer extends HTMLElement {
 			cssContainer.innerHTML = style;
 			this.shadowRoot.appendChild(cssContainer);
 
-
 			//FORM
 
 			const form = document.createElement('form');
 			form.id = 'form';
 			form.addEventListener('submit', async (e) => {
-				console.log('En addEvent listener')
+				console.log('En addEvent listener');
 				e.preventDefault();
-				const DataCharacters = await getCharacter(Number(input.value));
+				await this.createArray(Number(input.value));
 				console.log(this.characters);
-				this.renderCharacter(DataCharacters)
-
 			});
 
 			const input = document.createElement('input');
@@ -59,30 +52,38 @@ class AppContainer extends HTMLElement {
 			form.appendChild(submitButton);
 
 			this.shadowRoot.appendChild(form);
-
-
-
 		}
+	}
 
-	renderCharacter (DataCharacter: any) {
-		 this.characters = DataCharacter.map((user: any) => {
-        const mycharacterElement = this.ownerDocument.createElement('my-character') as Mycharacter;
-				mycharacterElement.setAttribute(Attribute.image, user.image);
-				mycharacterElement.setAttribute(Attribute.uid, string(user.id));
-				mycharacterElement.setAttribute(Attribute.name, user.name);
-				mycharacterElement.setAttribute(Attribute.status, user.status);
-				mycharacterElement.setAttribute(Attribute.species, user.species);
-				mycharacterElement.setAttribute(Attribute.type, user.type);
-				mycharacterElement.setAttribute(Attribute.origin, user.origin);
-				mycharacterElement.setAttribute(Attribute.firstEpisodeName , user.firstEpisodeName);
-				return mycharacterElement;
-		 });
-
-		 if (this.shadowRoot) {
-			this.characters.forEach((character)) => {
-				  this.shadowRoot?.appendChild(character);
-			}
-		 }
+	async createArray(number: number) {
+		const charactersArray = [];
+		for (let i = 1; i <= number; i++) {
+			const character = await getRickandMorty(i);
+			charactersArray.push(character);
 		}
+		this.renderCharacter(charactersArray);
+	}
+
+	renderCharacter(DataCharacter: any) {
+		this.characters = DataCharacter.map((user: any) => {
+			const mycharacterElement = this.ownerDocument.createElement('my-character') as Mycharacter;
+			mycharacterElement.setAttribute(Attribute.image, user.image);
+			mycharacterElement.setAttribute(Attribute.uid, String(user.id));
+			mycharacterElement.setAttribute(Attribute.name, user.name);
+			mycharacterElement.setAttribute(Attribute.status, user.status);
+			mycharacterElement.setAttribute(Attribute.species, user.species);
+			mycharacterElement.setAttribute(Attribute.type, user.type);
+			mycharacterElement.setAttribute(Attribute.origin, user.origin);
+			mycharacterElement.setAttribute(Attribute.episode, user.episode);
+			return mycharacterElement;
+		});
+
+		if (this.shadowRoot) {
+			this.characters.forEach((character) => {
+				this.shadowRoot?.appendChild(character);
+			});
+		}
+	}
+}
 
 customElements.define('app-container', AppContainer);
