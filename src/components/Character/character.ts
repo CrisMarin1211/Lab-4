@@ -78,7 +78,7 @@ class character extends HTMLElement {
    </section>
    `;
 		}
-		const cssProfile = this.ownerDocument.createElement('style');
+		const cssProfile = this.ownerDocument.createElement('styles');
 		cssProfile.innerHTML = styles;
 		this.shadowRoot?.appendChild(cssProfile);
 	}
