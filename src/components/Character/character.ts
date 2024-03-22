@@ -1,4 +1,4 @@
-import style from './character.css';
+import styles from './character.css';
 
 export enum Attribute {
 	'name' = `name`,
@@ -62,18 +62,25 @@ class character extends HTMLElement {
 		if (this.shadowRoot) {
 			this.shadowRoot.innerHTML = `
 
-   <section>
-   <h1><b> Name: </b>${this.name}</h1>
-   <p><b> Id: </b>${this.uid}</p>
-   <img src="${this.image}" ><img>
-	 <p><b> Status: </b>${this.status}</p>
-   <p><b> Species: </b>${this.species}</p>
-   <p><b> Type: </b>${this.type}</p>
-   <p><b> Origin: </b>${this.origin}</p>
-	 <p><b> First Episode: </b>${this.episode}</p>
+   <section class='container'>
+
+				<img src="${this.image}" ><img>
+				<h1><b> Name: </b>${this.name}</h1>
+
+				<div class='info-container '>
+						<p><b> Id: </b>${this.uid}</p>
+						<p><b> Status: </b>${this.status}</p>
+						<p><b> Species: </b>${this.species}</p>
+						<p><b> Type: </b>${this.type}</p>
+						<p><b> Origin: </b>${this.origin}</p>
+						<p><b> First Episode: </b>${this.episode}</p>
+				</div>
    </section>
    `;
 		}
+		const cssProfile = this.ownerDocument.createElement('style');
+		cssProfile.innerHTML = styles;
+		this.shadowRoot?.appendChild(cssProfile);
 	}
 }
 

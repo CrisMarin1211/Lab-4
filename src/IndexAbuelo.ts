@@ -73,7 +73,7 @@ class AppContainer extends HTMLElement {
 			mycharacterElement.setAttribute(Attribute.status, user.status);
 			mycharacterElement.setAttribute(Attribute.species, user.species);
 			mycharacterElement.setAttribute(Attribute.type, user.type);
-			mycharacterElement.setAttribute(Attribute.origin, user.origin);
+			mycharacterElement.setAttribute(Attribute.origin, user.origin.name);
 			mycharacterElement.setAttribute(Attribute.episode, user.episode);
 			return mycharacterElement;
 		});
